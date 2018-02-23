@@ -8,7 +8,9 @@
     $loginT = mysqli_query($link, $loginTQ);
     // echo $loginstring;
     $user_set = mysqli_query($link, $loginstring);
-    // echo mysqli_num_rows();
+    // echo mysqli_num_rows
+
+    // decript
     if(mysqli_num_rows($user_set)){
       $founduser = mysqli_fetch_array($user_set, MYSQLI_ASSOC);
       $id = $founduser['user_id'];
