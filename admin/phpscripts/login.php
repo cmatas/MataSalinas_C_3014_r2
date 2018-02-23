@@ -3,14 +3,24 @@
     require_once('connect.php');
     $username = mysqli_real_escape_string($link, $username);
     $password = mysqli_real_escape_string($link, $password);
-    $loginstring = "SELECT * FROM tbl_user WHERE user_name='{$username}' AND user_pass='{$password}'";
+
+    // decript
+    if(preg_match("/^(.*)::(.*)$/", $criptans, $regs)) {
+        // decrypt encrypted string
+        list(, $criptans, $criptiv) = $regs;
+        $criptmethod = 'AES-128-CTR';
+        $criptkey = openssl_digest(gethostname() . "|" . ip2long($_SERVER['SERVER_ADDR']), 'SHA256', true);
+        $decrans = openssl_decrypt($criptans, $criptmethod, $criptkey, 0, hex2bin($criptiv));
+  }
+    // decript end
+
+    $loginstring = "SELECT * FROM tbl_user WHERE user_name='{$username}' AND user_pass='{$decrans}'";
     $loginTQ = "SELECT * FROM tbl_user WHERE user_name='{$username}'";
     $loginT = mysqli_query($link, $loginTQ);
     // echo $loginstring;
     $user_set = mysqli_query($link, $loginstring);
     // echo mysqli_num_rows
 
-    // decript
     if(mysqli_num_rows($user_set)){
       $founduser = mysqli_fetch_array($user_set, MYSQLI_ASSOC);
       $id = $founduser['user_id'];
