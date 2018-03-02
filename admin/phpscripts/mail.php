@@ -11,14 +11,14 @@ require_once "Mail.php";
   function submitMessage($fname, $username, $email, $password){
     // you can only test this stuff in your live server
 
-    $from = 'cmata@cammata.biz';
+    $from = '';
     $to = $email;
     $subject = "Hi, Your username and password to access the website are here!";
     $body = "Hello" . $fname . "The following username and password are just temporary so make sure to change them once you get to this website: blabla <br> username:" . $username . " <br> password:" . $password;
 
-    $host = "mail.cammata.biz";
-    $mailuser = "cmata@cammata.biz";
-    $mailpass = "45docelolsCH0KOBO";
+    $host = "";
+    $mailuser = "";
+    $mailpass = "";
 
     $headers = array ('From' => $from,
       'To' => $to,
